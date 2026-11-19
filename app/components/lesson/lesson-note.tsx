@@ -1,6 +1,6 @@
 import { useState, useId } from "react";
 import { useFetcher } from "react-router";
-import type { Route } from "../../routes/+types/courses.$slug.lessons.$lessonId";
+import type { LessonLoaderData } from "./loader-data";
 import { describeNoteLength, type NoteLength } from "~/modules/note-length";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent } from "~/components/ui/card";
@@ -8,11 +8,7 @@ import { Textarea } from "~/components/ui/textarea";
 import { NotebookPen } from "lucide-react";
 import { cn, formatRelativeTime } from "~/lib/utils";
 
-export function LessonNote({
-  note,
-}: {
-  note: Route.ComponentProps["loaderData"]["note"];
-}) {
+export function LessonNote({ note }: { note: LessonLoaderData["note"] }) {
   const fetcher = useFetcher<{ ok: boolean; error?: string }>();
   const isSaving = fetcher.state !== "idle";
   const error = fetcher.data?.error;
@@ -62,7 +58,7 @@ function NoteStatus({
   note,
 }: {
   error: string | undefined;
-  note: Route.ComponentProps["loaderData"]["note"];
+  note: LessonLoaderData["note"];
 }) {
   if (error) return <span className="text-sm text-red-600">{error}</span>;
   if (!note) return null;

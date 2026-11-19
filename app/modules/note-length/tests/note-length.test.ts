@@ -5,8 +5,6 @@ import { MAX_NOTE_LENGTH } from "~/lib/notes";
 describe("describeNoteLength", () => {
   it("counts an empty draft as zero against the limit", () => {
     expect(describeNoteLength("")).toEqual({
-      count: 0,
-      max: MAX_NOTE_LENGTH,
       overLimit: false,
       nearLimit: false,
       label: "0 / 2,000",
@@ -14,7 +12,7 @@ describe("describeNoteLength", () => {
   });
 
   it("ignores leading and trailing whitespace, as the server does", () => {
-    expect(describeNoteLength("  hello \n").count).toBe(5);
+    expect(describeNoteLength("  hello \n").label).toBe("5 / 2,000");
   });
 
   it("is not near the limit just below nine tenths of it", () => {

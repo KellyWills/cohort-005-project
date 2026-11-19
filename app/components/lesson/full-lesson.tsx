@@ -22,14 +22,14 @@ import type { LessonLoaderData } from "~/components/lesson/loader-data";
 
 const AUTOPLAY_KEY = "cadence-autoplay";
 
-export function useAutoplay() {
+function useAutoplay() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
     try {
       setEnabled(localStorage.getItem(AUTOPLAY_KEY) === "true");
     } catch {
-      /* silently fail */
+      // Storage can be blocked (private mode, disabled cookies); autoplay just stays off.
     }
   }, []);
 
@@ -39,7 +39,7 @@ export function useAutoplay() {
       try {
         localStorage.setItem(AUTOPLAY_KEY, String(next));
       } catch {
-        /* silently fail */
+        // Storage can be blocked (private mode, disabled cookies); autoplay just stays off.
       }
       return next;
     });

@@ -1,8 +1,6 @@
 import { MAX_NOTE_LENGTH } from "~/lib/notes";
 
 export type NoteLength = {
-  count: number;
-  max: number;
   overLimit: boolean;
   nearLimit: boolean;
   label: string;
@@ -16,8 +14,6 @@ export function measureNoteLength(body: string): NoteLength {
   const count = body.trim().length;
   const overLimit = count > MAX_NOTE_LENGTH;
   return {
-    count,
-    max: MAX_NOTE_LENGTH,
     overLimit,
     nearLimit: !overLimit && count >= MAX_NOTE_LENGTH * NEAR_LIMIT_SHARE,
     label: `${count.toLocaleString("en")} / ${MAX_NOTE_LENGTH.toLocaleString("en")}`,
