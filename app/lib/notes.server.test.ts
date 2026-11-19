@@ -98,6 +98,15 @@ describe("saving a Note", () => {
     expect(getNote(db, base.user.id, lessonIds[0])).toBeUndefined();
   });
 
+  it("counts a submitted line break as one character, as the notes box does", () => {
+    const body = `${"a".repeat(1000)}\r\n${"b".repeat(999)}`;
+    const saved = saveNote(db, base.user.id, lessonIds[0], body, NOW);
+    expect(saved).toMatchObject({ ok: true });
+    expect(getNote(db, base.user.id, lessonIds[0])?.body).toBe(
+      `${"a".repeat(1000)}\n${"b".repeat(999)}`
+    );
+  });
+
   it("refuses a Note that is only whitespace", () => {
     expect(saveNote(db, base.user.id, lessonIds[0], "   ", NOW)).toEqual({
       ok: false,
